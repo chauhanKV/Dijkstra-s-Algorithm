@@ -31,5 +31,18 @@ public class Main {
 
         System.out.println("Shortest Path from A to F is : "+ weightedGraph.getShortestPath("A", "F"));
 
+
+        WeightedGraph weightedGraph1 = new WeightedGraph();
+        weightedGraph1.addNode("A");
+        weightedGraph1.addNode("B");
+        weightedGraph1.addNode("C");
+
+        weightedGraph1.addEdge("A", "B", 1);
+        weightedGraph1.addEdge("B", "C", 10);
+        weightedGraph1.addEdge("C", "A", 12);
+
+        var hasCycle = weightedGraph1.hasCycle();
+        System.out.println("Has Cycle ? : " + hasCycle);
+
     }
 }

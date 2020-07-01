@@ -102,5 +102,34 @@ public class WeightedGraph {
         return shortestPath;
     }
 
+    public boolean hasCycle()
+    {
+        Set<Node> visited = new HashSet<>();
+        for(var node : nodes.values())
+        {
+            if(!visited.contains(node) && hasCycle(node, node, visited))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean hasCycle(Node node, Node parent, Set<Node> visited)
+    {
+        visited.add(node);
+
+        for(var edge : node.getEdges())
+        {
+            if(parent == edge.getToNode())
+                continue;
+
+            if(visited.contains(edge.getToNode()))
+                return true;
+
+            if(hasCycle(edge.getToNode(), node, visited))
+                return true;
+        }
+
+        return false;
+    }
 
 }
