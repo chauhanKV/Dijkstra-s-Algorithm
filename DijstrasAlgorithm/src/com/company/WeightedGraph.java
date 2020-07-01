@@ -122,10 +122,7 @@ public class WeightedGraph {
             if(parent == edge.getToNode())
                 continue;
 
-            if(visited.contains(edge.getToNode()))
-                return true;
-
-            if(hasCycle(edge.getToNode(), node, visited))
+            if(visited.contains(edge.getToNode()) && hasCycle(edge.getToNode(), node, visited))
                 return true;
         }
 
