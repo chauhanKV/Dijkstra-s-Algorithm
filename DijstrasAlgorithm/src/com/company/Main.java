@@ -41,8 +41,31 @@ public class Main {
         weightedGraph1.addEdge("B", "C", 10);
         weightedGraph1.addEdge("C", "A", 12);
 
-        var hasCycle = weightedGraph1.hasCycle();
-        System.out.println("Has Cycle ? : " + hasCycle);
+//        var hasCycle = weightedGraph1.hasCycle();
+//        System.out.println("Has Cycle ? : " + hasCycle);
+
+        System.out.println("Minimum Spanning Tree");
+        WeightedGraph weightedGraph2 = new WeightedGraph();
+        weightedGraph2.addNode("A");
+        weightedGraph2.addNode("B");
+        weightedGraph2.addNode("C");
+        weightedGraph2.addNode("D");
+
+        weightedGraph2.addEdge("A", "B", 3);
+        weightedGraph2.addEdge("B", "D", 4);
+        weightedGraph2.addEdge("C", "D", 5);
+        weightedGraph2.addEdge("A", "C", 1);
+        weightedGraph2.addEdge("B", "C", 2);
+
+
+
+
+
+        weightedGraph2.print();
+
+        weightedGraph2.getMinimumSpanningTree();
+
+
 
     }
 }

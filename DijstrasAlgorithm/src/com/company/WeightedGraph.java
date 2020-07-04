@@ -26,6 +26,11 @@ public class WeightedGraph {
         toNode.addEdge(fromNode, weight);
     }
 
+    public boolean contains(String node)
+    {
+        return nodes.containsKey(node);
+    }
+
     public void print() {
         for (var node : nodes.values()) {
             var edges = node.getEdges();
@@ -127,6 +132,68 @@ public class WeightedGraph {
         }
 
         return false;
+    }
+
+    public void getMinimumSpanningTree()
+    {
+
+        WeightedGraph tree = new WeightedGraph();
+        PriorityQueue<Edge> edges = new PriorityQueue<>(Comparator.comparingInt(e -> e.getWeight()));
+
+        var startNode = nodes.values().iterator().next();
+
+        if(edges.isEmpty())
+            tree.print();
+
+        edges.addAll(startNode.getEdges());
+
+        tree.addNode(startNode.toString());
+
+        while(tree.nodes.size() < nodes.size())
+        {
+            var minEdge = edges.remove();
+            var nextNode = minEdge.getToNode();
+
+            if(tree.contains(nextNode.toString()))
+                continue;
+
+            tree.addNode(nextNode.toString());
+            tree.addEdge(minEdge.getFromNode().toString(), nextNode.toString(), minEdge.getWeight());
+
+            for(var edge : nextNode.getEdges())
+            {
+                if(!tree.contains(edge.getToNode().toString()))
+                    edges.add(edge);
+            }
+
+        }
+        tree.print();
+    }
+
+    private void getMinimumSpanningTree(Node fromNode, PriorityQueue<Edge> queue, WeightedGraph weightedGraph)
+    {
+        var fromNodeEdge = queue.remove();
+        var toNode = fromNodeEdge.getToNode();
+
+        if(!weightedGraph.contains(toNode.toString()))
+        {
+            weightedGraph.addNode(fromNode.toString());
+            weightedGraph.addNode(toNode.toString());
+            weightedGraph.addEdge(fromNode.toString(), toNode.toString(), fromNodeEdge.getWeight());
+
+            for(var toNodeEdge: toNode.getEdges())
+            {
+                if(!queue.contains((toNodeEdge)))
+                    queue.add(toNodeEdge);
+            }
+        }
+        else
+        {
+            fromNodeEdge = queue.remove();
+            toNode = fromNodeEdge.getToNode();
+        }
+        if(weightedGraph.nodes.size() < nodes.size())
+            getMinimumSpanningTree(fromNodeEdge.getToNode(), queue, weightedGraph);
     }
 
 }
